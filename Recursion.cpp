@@ -25,11 +25,12 @@ int power(int n){
 }
 
 int count(int n){
+	//base case
 	if(n==1){
 		return 1;
 	}
+	//Recursive Relation
 	cout<<n;
-	
 	count(n-1);
 }
 int main(){
