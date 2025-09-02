@@ -1,3 +1,5 @@
+//--TODO : Write iterative functions for preorder and postorder traversal and reverse LOT
+
 #include<iostream>
 #include<queue>
 using namespace std;
@@ -58,11 +60,11 @@ void levelOrderTraversal(node* root){
             //checking the child nodes of current node and push them to queue
             if(temp->left) q.push(temp->left);
             if(temp->right) q.push(temp->right);
-        }
-        
-    }
-    
+        }    
+    }    
 }
+
+
 
 
 int main(){
