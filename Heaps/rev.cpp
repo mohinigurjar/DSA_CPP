@@ -3,87 +3,119 @@ using namespace std;
 
 class Heap{
     public:
-
     int arr[100];
-    int size = 0;
+    int size;
 
     Heap(){
         arr[0] = -1;
         size = 0;
     }
 
-
-    void insert(int value){
-        //inserting a node
-
-        //1. insert at end
-        size = size + 1;
+    void insert(int val){
+        //increase the size
+        size = size+1;
         int index = size;
-        arr[index] = value;
 
+        //add at end
+        arr[index] = val;
 
-        //check the max heap property -- find the parent of newly added node and check the max heap property for that
+        //move inserted elt to its correct position
         while(index > 1){
             int parent = index/2;
+            
             if(arr[parent] < arr[index]){
                 swap(arr[parent], arr[index]);
                 index = parent;
-            }else{
+            }
+            else{
                 return;
             }
         }
     }
 
+    //delete the root node
+    void deleteFromHeap(){
+        if(size == 0) return;
+        //swapping tne root node with last element
+        swap(arr[size], arr[1]);
 
-    //printing the max heap array
+        //decrease the size
+        size--;
+
+        //move the new root to its correct position
+        int i=1;
+        while(i < size){
+            int left = 2*i + 1;
+            int right = 2*i + 2;
+
+            if(left <= size && arr[left] > arr[i]){
+                swap(arr[left], arr[i]);
+                i = left;
+            }
+            else if(right <= size && arr[right] > arr[i]){
+                swap(arr[right], arr[i]);
+                i = right;
+            }
+            else {
+                return;
+            }
+        }
+    }
+
     void print(){
         for(int i=1; i<=size; i++){
             cout<<arr[i]<<" ";
         }cout<<endl;
     }
 
+    //position ith node at its correct place
+    void heapify(int arr[], int n, int i){
+        int largest = i;
+        int left = 2*i;
+        int right = 2*i + 1;
 
-    //delete root node from heap
-    void deleteFromHeap(){
-        //interchanging the root node with the last node
-        arr[1] = arr[size];
-        //decreasing the size means deleting the node
-        size--;
+        if(left <= n && arr[left] > arr[largest]){
+            largest = left;
+        }
+        if(right <= n && arr[right] > arr[largest]){
+            largest = right;
+        }
 
-        //check the first node max heap property
-        int i = 1;
-        while (i < size){
-            int left = 2*i;
-            int right = 2*i+1;
-
-            if(left < size && arr[left] > arr[i]){
-                swap(arr[left], arr[i]);
-                i = left;
-            }
-            else if(right < size && arr[right] > arr[i]){
-                swap(arr[right], arr[i]);
-                i = right;
-            }else{
-                return;
-            }
+        if(largest != i){
+            swap(arr[largest], arr[i]);
+            heapify(arr, largest, n);
         }
     }
-
-
 };
+
 
 int main(){
     Heap h;
 
-    h.insert(8);
-    h.insert(9);
-    h.insert(11);
-    h.insert(67);
-    h.insert(45);
+    // int arr[] = {-1, 42, 32, 62, 72, 82};
+    // int n = 5;
+
+    h.insert(42);
+    h.insert(32);
+    h.insert(62);
+    h.insert(72);
+    h.insert(82);
 
     h.print();
 
     h.deleteFromHeap();
 
     h.print();
+
+     int arr[6] = {-1, 54, 53, 55, 52, 50};
+    int n = 5;
+
+    for(int i=3; i>0; i--){
+        h.heapify(arr, n, i);
+    }
+
+    cout<<"PRINTING THE ARRAY NOW"<<endl;
+    for(int i=1; i<=n; i++){
+        cout<<arr[i]<<" ";
+    }cout<<endl;
 }
