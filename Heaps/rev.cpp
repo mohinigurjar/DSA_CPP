@@ -86,6 +86,19 @@ class Heap{
             heapify(arr, largest, n);
         }
     }
+
+    void heapSort(int arr[], int n){
+        int size = n;
+
+        while( size > 1){
+
+            swap(arr[size], arr[1]);
+            size--;
+
+            heapify(arr, size, 1);
+
+        }
+    }
 };
 
 
@@ -118,4 +131,8 @@ int main(){
     for(int i=1; i<=n; i++){
         cout<<arr[i]<<" ";
     }cout<<endl;
+
+
+    h.heapsort(arr, n);
+    h.print();
 }
